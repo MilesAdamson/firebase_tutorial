@@ -1,0 +1,27 @@
+name: firebase_tutorial
+description: A new Flutter project.
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^1.10.0
+  cloud_firestore: ^3.1.0
+  json_serializable: ^6.0.1
+  json_annotation: ^4.3.0
+  flutter_bloc: ^7.3.3
+  uuid: ^3.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+  build_runner: ^2.1.4
+
+flutter:
+  uses-material-design: true
