@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:firebase_tutorial/blocs/users/users_bloc.dart';
 import 'package:firebase_tutorial/blocs/users/users_events.dart';
 import 'package:firebase_tutorial/blocs/users/users_state.dart';
+import 'package:firebase_tutorial/components/user_list_tile.dart';
 import 'package:firebase_tutorial/queries/users_query.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,26 +51,7 @@ class UsersScreen extends StatelessWidget {
             return ListView.builder(
               padding: const EdgeInsets.only(bottom: 100.0),
               itemCount: state.users.length,
-              itemBuilder: (context, i) {
-                final user = state.users[i];
-                return ListTile(
-                  isThreeLine: true,
-                  title: Text(user.name),
-                  subtitle: Text("${user.email}\n${user.birthDate}"),
-                  trailing: IconButton(
-                    icon: const Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    onPressed: () {
-                      context.read<UsersBloc>().add(UsersDeleteEvent(user.id));
-                    },
-                  ),
-                  onTap: () {
-                    // TODO full page view of a user
-                  },
-                );
-              },
+              itemBuilder: (context, i) => UserListTile(user: state.users[i]),
             );
           },
         ),
