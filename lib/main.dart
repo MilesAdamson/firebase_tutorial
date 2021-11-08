@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_tutorial/blocs/users/users_bloc.dart';
+import 'package:firebase_tutorial/models/user_model.dart';
+import 'package:firebase_tutorial/repositories/repository.dart';
 import 'package:firebase_tutorial/repositories/users_repository.dart';
 import 'package:firebase_tutorial/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   // Use a function to pass firebase services into repositories, so
   // that you can create all of them in main before firebase is initialized
-  final usersRepository = MyUsersRepository(() => FirebaseFirestore.instance);
+  final usersRepository = UsersRepository(() => FirebaseFirestore.instance);
 
   runApp(MyApp(
     usersRepository: usersRepository,
@@ -17,7 +19,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final UsersRepository usersRepository;
+  final Repository<UserModel> usersRepository;
 
   const MyApp({
     Key? key,

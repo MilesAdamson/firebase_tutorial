@@ -1,22 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_tutorial/models/user_model.dart';
 import 'package:firebase_tutorial/queries/users_query.dart';
+import 'package:firebase_tutorial/repositories/repository.dart';
 
-typedef FirebaseFirestoreProvider = FirebaseFirestore Function();
-
-abstract class UsersRepository {
-  String get collectionName;
-  Future<DocumentSnapshot<UserModel>> get(String id);
-  Future<DocumentSnapshot<UserModel>> upsert(UserModel userModel);
-  Future<List<DocumentSnapshot<UserModel>>> getAll();
-  Future<List<DocumentSnapshot<UserModel>>> query(UsersQuery userQuery);
-  Future<void> delete(String id);
-}
-
-class MyUsersRepository implements UsersRepository {
+class UsersRepository implements Repository<UserModel> {
   final FirebaseFirestoreProvider _firestoreProvider;
 
-  MyUsersRepository(this._firestoreProvider);
+  UsersRepository(this._firestoreProvider);
 
   FirebaseFirestore get _firestore => _firestoreProvider();
 
@@ -53,18 +43,23 @@ class MyUsersRepository implements UsersRepository {
   // Firestore queries are fast but have limitations.
   // https://firebase.google.com/docs/firestore/query-data/queries
   @override
-  Future<List<DocumentSnapshot<UserModel>>> query(UsersQuery userQuery) async {
-    final query = _collection
-        .where(
-          UserModel.keyIsEmailVerified,
-          isEqualTo: userQuery.isEmailVerified,
-        )
-        .where(
-          UserModel.keyBirthDate,
-          isGreaterThan: Timestamp.fromDate(userQuery.bornAfter),
-        );
+  Future<List<DocumentSnapshot<UserModel>>> query(queryData) async {
+    if (queryData is UsersQuery) {
+      final query = _collection
+          .where(
+            UserModel.keyIsEmailVerified,
+            isEqualTo: queryData.isEmailVerified,
+          )
+          .where(
+            UserModel.keyBirthDate,
+            isGreaterThan: Timestamp.fromDate(queryData.bornAfter),
+          );
 
-    return (await query.get()).docs;
+      return (await query.get()).docs;
+    }
+
+    throw UnimplementedError(
+        "Query of type ${queryData.runtimeType} is not implemented");
   }
 
   @override

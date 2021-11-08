@@ -4,11 +4,12 @@ import 'package:firebase_tutorial/blocs/users/event_handlers/load_all_users.dart
 import 'package:firebase_tutorial/blocs/users/event_handlers/query_users.dart';
 import 'package:firebase_tutorial/blocs/users/users_events.dart';
 import 'package:firebase_tutorial/blocs/users/users_state.dart';
-import 'package:firebase_tutorial/repositories/users_repository.dart';
+import 'package:firebase_tutorial/models/user_model.dart';
+import 'package:firebase_tutorial/repositories/repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UsersBloc extends Bloc<UsersEvent, UsersState> {
-  final UsersRepository repository;
+  final Repository<UserModel> repository;
 
   UsersBloc(this.repository) : super(UsersState.initial()) {
     on<UsersLoadAllEvent>(
