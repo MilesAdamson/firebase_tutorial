@@ -1,4 +1,4 @@
-# Firestore Part 1
+# Firestore Part 2
 
 ### 1. NoSQL Storage in Firestore
 
