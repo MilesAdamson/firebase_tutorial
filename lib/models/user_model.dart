@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_tutorial/models/timestamp_converter.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_model.g.dart';
@@ -49,4 +50,25 @@ class UserModel {
       _$UserModelFromJson(Map<String, dynamic>.from(json));
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
+
+  @override
+  int get hashCode => hashValues(
+        id,
+        name,
+        phoneNumber,
+        email,
+        isEmailVerified,
+        birthDate,
+      );
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other is UserModel &&
+            name == other.name &&
+            phoneNumber == other.phoneNumber &&
+            email == other.email &&
+            isEmailVerified == other.isEmailVerified &&
+            birthDate == other.birthDate);
+  }
 }
