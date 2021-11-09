@@ -20,9 +20,10 @@ FutureOr<void> deleteUser(
     deletionsMap[event.id] = Process.loading();
     emit(state.copyWith(deleteUserProcesses: deletionsMap));
 
+    await repository.delete(event.id);
+
     final userDocuments =
         Map<String, DocumentSnapshot<UserModel>>.from(state.userDocuments);
-    await repository.delete(event.id);
 
     userDocuments.remove(event.id);
 
