@@ -1,4 +1,4 @@
-# Firestore Part 2
+# Firestore Part 2: NoSQL
 
 ### 1. NoSQL Storage in Firestore
 
@@ -9,3 +9,13 @@
 ### 4. Firestore Repository
 
 ### 5. Bloc using Firestore
+
+# Firestore Part 3: Queries
+
+### 1. Query API
+
+### 2. Limitations
+
+### 3. Composite Indexes
+
+### 4. Ordering Results

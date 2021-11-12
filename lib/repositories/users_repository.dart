@@ -85,6 +85,25 @@ class UsersRepository implements Repository<UserModel> {
       );
     }
 
+    // If you use limit to limit the number of documents returned, sorting
+    // matters a lot because it will change which documents are returned
+    if (queryData.birthDateSortDirection != null) {
+      query = query.orderBy(
+        UserModel.keyBirthDate,
+        descending:
+            queryData.birthDateSortDirection == SortDirection.descending,
+      );
+    }
+
+    // You can stack orderBy such that it sorts by 1 field
+    // and breaks ties with another. The way this is written,
+    // sorting ties with users of the same birthday would be broken by
+    // checking isEmailVerified
+    query = query.orderBy(
+      UserModel.keyIsEmailVerified,
+      descending: false,
+    );
+
     return (await query.get()).docs;
   }
 

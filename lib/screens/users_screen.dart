@@ -11,8 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UsersScreen extends StatefulWidget {
-  static final random = Random();
-
   const UsersScreen({Key? key}) : super(key: key);
 
   @override
@@ -21,6 +19,7 @@ class UsersScreen extends StatefulWidget {
 
 class _UsersScreenState extends State<UsersScreen> {
   late final StreamSubscription errorListener;
+  static final random = Random();
 
   @override
   void initState() {
@@ -112,21 +111,18 @@ class _UsersScreenState extends State<UsersScreen> {
   }
 
   void createRandomUser(BuildContext context) {
-    final i = UsersScreen.random.nextInt(50);
+    final yearsOld = random.nextInt(50);
 
-    final languages = Languages.all.where((_) {
-      final i = UsersScreen.random.nextInt(2) + 1;
-      return i.isEven;
-    }).toList();
+    final languages = Languages.all.where((_) => flipCoin()).toList();
 
     context.read<UsersBloc>().add(
           UsersCreateEvent(
-            name: "Example User $i",
-            phoneNumber: i.toString(),
-            email: i.isOdd ? null : "example$i@gmail.com",
-            birthDate: DateTime.now().subtract(Duration(days: 365 * i)),
+            name: "Example User $yearsOld",
+            phoneNumber: yearsOld.toString(),
+            email: flipCoin() ? null : "example$yearsOld@gmail.com",
+            birthDate: DateTime.now().subtract(Duration(days: 365 * yearsOld)),
             languages: languages,
-            isEmailVerified: i.isEven,
+            isEmailVerified: flipCoin(),
           ),
         );
   }
@@ -135,9 +131,10 @@ class _UsersScreenState extends State<UsersScreen> {
     context.read<UsersBloc>().add(
           UsersQueryEvent(
             UsersQuery(
-              isEmailVerified: true,
-              bornAfter: DateTime(2000),
+              isEmailVerified: null,
+              bornAfter: DateTime(1900),
               language: Languages.english,
+              birthDateSortDirection: SortDirection.descending,
             ),
           ),
         );
@@ -172,4 +169,6 @@ class _UsersScreenState extends State<UsersScreen> {
       }
     });
   }
+
+  bool flipCoin() => (random.nextInt(2) + 1).isEven;
 }

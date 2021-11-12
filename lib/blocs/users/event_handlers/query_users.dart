@@ -16,10 +16,7 @@ FutureOr<void> queryUsers(
   Repository<UserModel> repository,
 ) async {
   try {
-    emit(state.copyWith(
-      queryUsersProcess: Process.loading(),
-      userDocuments: {},
-    ));
+    emit(state.copyWith(queryUsersProcess: Process.loading()));
 
     final queryResult = await repository.query(event.usersQuery);
     final userDocuments = <String, DocumentSnapshot<UserModel>>{};
