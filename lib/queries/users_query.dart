@@ -1,9 +1,13 @@
-class UsersQuery {
-  final bool isEmailVerified;
-  final DateTime bornAfter;
+import 'package:firebase_tutorial/util/languages.dart';
 
-  UsersQuery(
-    this.isEmailVerified,
-    this.bornAfter,
-  );
+class UsersQuery {
+  final bool? isEmailVerified;
+  final DateTime bornAfter;
+  final LanguageIdentifier language;
+
+  UsersQuery({
+    required this.isEmailVerified,
+    required this.bornAfter,
+    required this.language,
+  });
 }

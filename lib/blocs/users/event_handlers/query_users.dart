@@ -17,24 +17,26 @@ FutureOr<void> queryUsers(
 ) async {
   try {
     emit(state.copyWith(
-      loadUsersProcess: Process.loading(),
+      queryUsersProcess: Process.loading(),
       userDocuments: {},
     ));
 
     final queryResult = await repository.query(event.usersQuery);
     final userDocuments = <String, DocumentSnapshot<UserModel>>{};
 
+    // Unlike other handlers, this one simply overwrites the entire
+    // map of users with the returned values
     for (final doc in queryResult) {
       userDocuments[doc.id] = doc;
     }
 
     emit(state.copyWith(
       userDocuments: userDocuments,
-      loadUsersProcess: Process.success(),
+      queryUsersProcess: Process.success(),
     ));
   } catch (e, s) {
     final error = "$e\n$s";
     debugPrint(error);
-    emit(state.copyWith(loadUsersProcess: Process.failed(error)));
+    emit(state.copyWith(queryUsersProcess: Process.failed(error)));
   }
 }

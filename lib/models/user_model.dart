@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_tutorial/models/timestamp_converter.dart';
+import 'package:firebase_tutorial/util/languages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -18,6 +19,7 @@ class UserModel {
   static const keyEmail = "email";
   static const keyIsEmailVerified = "isEmailVerified";
   static const keyBirthDate = "birthDate";
+  static const keyLanguages = "languages";
 
   @JsonKey(name: keyId)
   final String id;
@@ -29,13 +31,18 @@ class UserModel {
   final String phoneNumber;
 
   @JsonKey(name: keyEmail)
-  final String email;
+  final String? email;
 
   @JsonKey(name: keyIsEmailVerified)
   final bool isEmailVerified;
 
   @JsonKey(name: keyBirthDate)
   final DateTime birthDate;
+
+  @JsonKey(name: keyLanguages)
+  final List<LanguageIdentifier> languages;
+
+  Timestamp get birthDateTimestamp => Timestamp.fromDate(birthDate);
 
   const UserModel(
     this.id,
@@ -44,6 +51,7 @@ class UserModel {
     this.email,
     this.isEmailVerified,
     this.birthDate,
+    this.languages,
   );
 
   factory UserModel.fromJson(json) =>
@@ -59,6 +67,7 @@ class UserModel {
         email,
         isEmailVerified,
         birthDate,
+        languages,
       );
 
   @override
@@ -69,6 +78,7 @@ class UserModel {
             phoneNumber == other.phoneNumber &&
             email == other.email &&
             isEmailVerified == other.isEmailVerified &&
+            listEquals(languages, other.languages) &&
             birthDate == other.birthDate);
   }
 }

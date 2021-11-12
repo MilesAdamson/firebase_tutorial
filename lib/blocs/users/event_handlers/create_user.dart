@@ -24,8 +24,9 @@ FutureOr<void> createUser(
       event.name,
       event.phoneNumber,
       event.email,
-      false,
+      event.isEmailVerified,
       event.birthDate,
+      event.languages,
     );
 
     final userDocument = await repository.upsert(user);

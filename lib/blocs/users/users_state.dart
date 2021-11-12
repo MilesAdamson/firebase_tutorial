@@ -9,6 +9,7 @@ class UsersState {
   final Map<String, DocumentSnapshot<UserModel>> userDocuments;
   final Process loadUsersProcess;
   final Process createUserProcess;
+  final Process queryUsersProcess;
   final Map<String, Process> deleteUserProcesses;
 
   List<UserModel> get users =>
@@ -18,12 +19,14 @@ class UsersState {
     this.userDocuments,
     this.loadUsersProcess,
     this.createUserProcess,
+    this.queryUsersProcess,
     this.deleteUserProcesses,
   );
 
   factory UsersState.initial() {
     return UsersState._internal(
       const <String, DocumentSnapshot<UserModel>>{},
+      Process.initial(),
       Process.initial(),
       Process.initial(),
       const <String, Process>{},
@@ -34,12 +37,14 @@ class UsersState {
     Map<String, DocumentSnapshot<UserModel>>? userDocuments,
     Process? loadUsersProcess,
     Process? createUserProcess,
+    Process? queryUsersProcess,
     Map<String, Process>? deleteUserProcesses,
   }) {
     return UsersState._internal(
       userDocuments ?? this.userDocuments,
       loadUsersProcess ?? this.loadUsersProcess,
       createUserProcess ?? this.createUserProcess,
+      queryUsersProcess ?? this.queryUsersProcess,
       deleteUserProcesses ?? this.deleteUserProcesses,
     );
   }
@@ -49,6 +54,7 @@ class UsersState {
         userDocuments,
         loadUsersProcess,
         createUserProcess,
+        queryUsersProcess,
         deleteUserProcesses,
       );
 
@@ -58,6 +64,7 @@ class UsersState {
         (other is UsersState &&
             mapEquals(userDocuments, other.userDocuments) &&
             loadUsersProcess == other.loadUsersProcess &&
+            queryUsersProcess == other.queryUsersProcess &&
             mapEquals(deleteUserProcesses, other.deleteUserProcesses) &&
             createUserProcess == other.createUserProcess);
   }
