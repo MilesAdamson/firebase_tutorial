@@ -98,10 +98,13 @@ class UsersRepository implements Repository<UserModel> {
     // You can stack orderBy such that it sorts by 1 field
     // and breaks ties with another. The way this is written,
     // sorting ties with users of the same birthday would be broken by
-    // checking isEmailVerified
+    // checking isEmailVerified.
     query = query.orderBy(
       UserModel.keyIsEmailVerified,
-      descending: false,
+      // Sorting bools is somewhat arbitrary.
+      // descending true sorts "true" above "false"
+      // descending false sorts "false" above "true"
+      descending: true,
     );
 
     return (await query.get()).docs;

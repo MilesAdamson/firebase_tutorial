@@ -111,16 +111,25 @@ class _UsersScreenState extends State<UsersScreen> {
   }
 
   void createRandomUser(BuildContext context) {
-    final yearsOld = random.nextInt(50);
+    final yearsOld = random.nextInt(10);
 
     final languages = Languages.all.where((_) => flipCoin()).toList();
+
+    // This truncates the time of day off so that we can observe
+    // sorting by a second field if the date is the same
+    final now = DateTime.now();
+    final birthDate = DateTime(
+      now.year,
+      now.month,
+      now.day,
+    ).subtract(Duration(days: 365 * yearsOld));
 
     context.read<UsersBloc>().add(
           UsersCreateEvent(
             name: "Example User $yearsOld",
             phoneNumber: yearsOld.toString(),
             email: flipCoin() ? null : "example$yearsOld@gmail.com",
-            birthDate: DateTime.now().subtract(Duration(days: 365 * yearsOld)),
+            birthDate: birthDate,
             languages: languages,
             isEmailVerified: flipCoin(),
           ),
