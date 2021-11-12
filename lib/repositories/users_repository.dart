@@ -76,15 +76,6 @@ class UsersRepository implements Repository<UserModel> {
           isGreaterThan: Timestamp.fromDate(queryData.bornAfter),
         );
 
-    // if [queryData.isEmailVerified] is null, both true or false will be
-    // returned as we simply don't modify the query at all
-    if (queryData.isEmailVerified != null) {
-      query = query.where(
-        UserModel.keyIsEmailVerified,
-        isEqualTo: queryData.isEmailVerified,
-      );
-    }
-
     // If you use limit to limit the number of documents returned, sorting
     // matters a lot because it will change which documents are returned
     if (queryData.birthDateSortDirection != null) {

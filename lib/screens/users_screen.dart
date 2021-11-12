@@ -140,7 +140,6 @@ class _UsersScreenState extends State<UsersScreen> {
     context.read<UsersBloc>().add(
           UsersQueryEvent(
             UsersQuery(
-              isEmailVerified: null,
               bornAfter: DateTime(1900),
               language: Languages.english,
               birthDateSortDirection: SortDirection.descending,
