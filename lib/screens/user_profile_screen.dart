@@ -55,10 +55,15 @@ class UserProfileScreenState extends State<UserProfileScreen> {
           body: ListView(
             children: [
               // TODO put a real image here with Firebase Cloud Storage
-              const CircleAvatar(
-                foregroundColor: Colors.lightBlue,
-                child: Text("TODO"),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: CircleAvatar(
+                  backgroundColor: Colors.blue,
+                  maxRadius: 75,
+                  child: Text("(profile image)"),
+                ),
               ),
+              const Divider(height: 1),
               ListTile(
                 title: Text(user.email ?? "No email address"),
                 subtitle: Text(

@@ -23,6 +23,7 @@ class _UsersScreenState extends State<UsersScreen> {
 
   @override
   void initState() {
+    queryUsers(context);
     _setupQueryErrorListener();
     super.initState();
   }
@@ -70,6 +71,10 @@ class _UsersScreenState extends State<UsersScreen> {
               );
             }
 
+            // We could in theory subscribe to every user in the list and have
+            // this screen live update as well. However, stream subscriptions
+            // can be expensive (in both performance and firestore bill)
+            // so instead only their profile screen will be subscribed.
             return ListView.builder(
               padding: const EdgeInsets.only(bottom: 100.0),
               itemCount: state.users.length,
