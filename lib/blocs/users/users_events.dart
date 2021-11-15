@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_tutorial/models/user_model.dart';
 import 'package:firebase_tutorial/queries/users_query.dart';
 import 'package:firebase_tutorial/util/languages.dart';
 import 'package:flutter/foundation.dart';
@@ -21,7 +23,7 @@ class UsersCreateEvent extends UsersEvent {
   final String phoneNumber;
   final String? email;
   final DateTime birthDate;
-  final List<LanguageIdentifier> languages;
+  final Set<LanguageIdentifier> languages;
   final bool isEmailVerified;
 
   UsersCreateEvent({
@@ -39,4 +41,25 @@ class UsersQueryEvent extends UsersEvent {
   final UsersQuery usersQuery;
 
   UsersQueryEvent(this.usersQuery);
+}
+
+@immutable
+class UsersUpdatedEvent extends UsersEvent {
+  final DocumentSnapshot<UserModel> document;
+
+  UsersUpdatedEvent(this.document);
+}
+
+@immutable
+class UsersSubscribeEvent extends UsersEvent {
+  final String id;
+
+  UsersSubscribeEvent(this.id);
+}
+
+@immutable
+class UsersUnsubscribeEvent extends UsersEvent {
+  final String id;
+
+  UsersUnsubscribeEvent(this.id);
 }

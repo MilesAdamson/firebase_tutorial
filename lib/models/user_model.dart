@@ -3,6 +3,7 @@ import 'package:firebase_tutorial/models/timestamp_converter.dart';
 import 'package:firebase_tutorial/util/languages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_model.g.dart';
@@ -20,6 +21,8 @@ class UserModel {
   static const keyIsEmailVerified = "isEmailVerified";
   static const keyBirthDate = "birthDate";
   static const keyLanguages = "languages";
+
+  String get birthDayDisplayString => DateFormat.yMMMd().format(birthDate);
 
   @JsonKey(name: keyId)
   final String id;
@@ -40,7 +43,7 @@ class UserModel {
   final DateTime birthDate;
 
   @JsonKey(name: keyLanguages)
-  final List<LanguageIdentifier> languages;
+  final Set<LanguageIdentifier> languages;
 
   Timestamp get birthDateTimestamp => Timestamp.fromDate(birthDate);
 
@@ -78,7 +81,7 @@ class UserModel {
             phoneNumber == other.phoneNumber &&
             email == other.email &&
             isEmailVerified == other.isEmailVerified &&
-            listEquals(languages, other.languages) &&
+            setEquals(languages, other.languages) &&
             birthDate == other.birthDate);
   }
 }

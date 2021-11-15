@@ -113,7 +113,7 @@ class _UsersScreenState extends State<UsersScreen> {
   void createRandomUser(BuildContext context) {
     final yearsOld = random.nextInt(10);
 
-    final languages = Languages.all.where((_) => flipCoin()).toList();
+    final languages = Languages.all.where((_) => flipCoin()).toSet();
 
     // This truncates the time of day off so that we can observe
     // sorting by a second field if the date is the same

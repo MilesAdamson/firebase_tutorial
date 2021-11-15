@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_tutorial/blocs/process.dart';
 import 'package:firebase_tutorial/models/user_model.dart';
@@ -11,6 +13,8 @@ class UsersState {
   final Process createUserProcess;
   final Process queryUsersProcess;
   final Map<String, Process> deleteUserProcesses;
+  final Map<String, StreamSubscription<DocumentSnapshot<UserModel>>>
+      userStreamSubscriptions;
 
   List<UserModel> get users =>
       userDocuments.values.map((doc) => doc.data()!).toList();
@@ -21,6 +25,7 @@ class UsersState {
     this.createUserProcess,
     this.queryUsersProcess,
     this.deleteUserProcesses,
+    this.userStreamSubscriptions,
   );
 
   factory UsersState.initial() {
@@ -30,6 +35,7 @@ class UsersState {
       Process.initial(),
       Process.initial(),
       const <String, Process>{},
+      const <String, StreamSubscription<DocumentSnapshot<UserModel>>>{},
     );
   }
 
@@ -39,6 +45,8 @@ class UsersState {
     Process? createUserProcess,
     Process? queryUsersProcess,
     Map<String, Process>? deleteUserProcesses,
+    Map<String, StreamSubscription<DocumentSnapshot<UserModel>>>?
+        userStreamSubscriptions,
   }) {
     return UsersState._internal(
       userDocuments ?? this.userDocuments,
@@ -46,6 +54,7 @@ class UsersState {
       createUserProcess ?? this.createUserProcess,
       queryUsersProcess ?? this.queryUsersProcess,
       deleteUserProcesses ?? this.deleteUserProcesses,
+      userStreamSubscriptions ?? this.userStreamSubscriptions,
     );
   }
 
@@ -66,6 +75,7 @@ class UsersState {
             loadUsersProcess == other.loadUsersProcess &&
             queryUsersProcess == other.queryUsersProcess &&
             mapEquals(deleteUserProcesses, other.deleteUserProcesses) &&
+            mapEquals(userStreamSubscriptions, other.userStreamSubscriptions) &&
             createUserProcess == other.createUserProcess);
   }
 }

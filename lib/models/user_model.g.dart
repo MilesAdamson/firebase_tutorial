@@ -13,7 +13,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       json['email'] as String?,
       json['isEmailVerified'] as bool,
       const TimestampConverter().fromJson(json['birthDate'] as Timestamp),
-      (json['languages'] as List<dynamic>).map((e) => e as String).toList(),
+      (json['languages'] as List<dynamic>).map((e) => e as String).toSet(),
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -23,5 +23,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'email': instance.email,
       'isEmailVerified': instance.isEmailVerified,
       'birthDate': const TimestampConverter().toJson(instance.birthDate),
-      'languages': instance.languages,
+      'languages': instance.languages.toList(),
     };
