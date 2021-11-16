@@ -20,7 +20,7 @@
 
 ### 4. Ordering Results
 
-# Firestore Part 3: Realtime Updates
+# Firestore Part 4: Realtime Updates
 
 ### 1. New event classes for Bloc
 
@@ -29,3 +29,5 @@
 ### 3. How to subscribe to a document reference
 
 ### 4. Unsubscribe and close subscriptions
+
+### 5. Dispatching events in the new UI
