@@ -19,7 +19,9 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class UserProfileScreenState extends State<UserProfileScreen> {
+  /// We need to save a reference to the bloc to add events in [dispose]
   late final usersBloc = context.read<UsersBloc>();
+
   @override
   initState() {
     debugPrint(widget.id);
@@ -43,9 +45,9 @@ class UserProfileScreenState extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<UsersBloc, UsersState>(
       builder: (context, state) {
-        // TODO because we navigate here from a UserListTile we know this exists.
+        // TODO because we navigate here from a UserListTile we know this user exists.
         // However, this might not work very well for deep linking where you could
-        // enter a screen from a different app state.
+        // enter a screen from a different app state where they don't.
         final user = state.userDocuments[widget.id]!.data()!;
 
         return Scaffold(

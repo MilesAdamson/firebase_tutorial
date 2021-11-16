@@ -5,6 +5,7 @@ import 'package:firebase_tutorial/blocs/users/users_events.dart';
 import 'package:firebase_tutorial/blocs/users/users_state.dart';
 import 'package:firebase_tutorial/models/user_model.dart';
 import 'package:firebase_tutorial/repositories/repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 FutureOr<void> unsubscribeToUser(
@@ -13,8 +14,10 @@ FutureOr<void> unsubscribeToUser(
   Emitter<UsersState> emit,
   Repository<UserModel> repository,
 ) async {
-  assert(state.userStreamSubscriptions.containsKey(event.id),
-      "Do not unsubscribe from users which were never subscribed to");
+  if (!state.userStreamSubscriptions.containsKey(event.id)) {
+    debugPrint("Stream for ${event.id} does not exist");
+    return;
+  }
 
   final subscriptions =
       Map<String, StreamSubscription<DocumentSnapshot<UserModel>>>.from(

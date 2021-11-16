@@ -19,3 +19,15 @@
 ### 3. Composite Indexes
 
 ### 4. Ordering Results
+
+# Firestore Part 3: Realtime Updates
+
+### 1. New event classes for Bloc
+
+### 2. Managing subscriptions in Bloc's state
+
+### 3. How to subscribe to a document reference
+
+### 4. Unsubscribe
+
+### 5. Ordering Results
