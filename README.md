@@ -28,6 +28,4 @@
 
 ### 3. How to subscribe to a document reference
 
-### 4. Unsubscribe
-
-### 5. Ordering Results
+### 4. Unsubscribe and close subscriptions
