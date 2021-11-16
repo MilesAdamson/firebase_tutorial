@@ -32,15 +32,15 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     );
 
     on<UsersSubscribeEvent>(
-      (event, emit) => subscribeToUser(event, state, emit, repository, this),
+      (event, emit) => subscribeToUser(event, state, emit, this),
     );
 
     on<UsersUnsubscribeEvent>(
-      (event, emit) => unsubscribeToUser(event, state, emit, repository),
+      (event, emit) => unsubscribeToUser(event, state, emit),
     );
 
     on<UsersUpdatedEvent>(
-      (event, emit) => onUserUpdated(event, state, emit, repository),
+      (event, emit) => onUserUpdated(event, state, emit),
     );
   }
 }

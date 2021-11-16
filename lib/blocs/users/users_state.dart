@@ -65,6 +65,7 @@ class UsersState {
         createUserProcess,
         queryUsersProcess,
         deleteUserProcesses,
+        userStreamSubscriptions,
       );
 
   @override
