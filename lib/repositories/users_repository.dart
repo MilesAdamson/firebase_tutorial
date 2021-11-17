@@ -61,9 +61,7 @@ class UsersRepository {
   // by name impossible to implement, unless you return all users and do it
   // client-side (but this means a lot of document reads and data usage)
 
-  Future<List<DocumentSnapshot<UserModel>>> query(queryData) async {
-    queryData = queryData as UsersQuery;
-
+  Future<List<DocumentSnapshot<UserModel>>> query(UsersQuery queryData) async {
     var query = _collection
         .where(
           UserModel.keyLanguages,
@@ -90,7 +88,7 @@ class UsersRepository {
     // checking isEmailVerified.
     query = query.orderBy(
       UserModel.keyIsEmailVerified,
-      // Sorting bools is somewhat arbitrary.
+      // Sorting bool's is somewhat arbitrary.
       // descending true sorts "true" above "false"
       // descending false sorts "false" above "true"
       descending: true,
