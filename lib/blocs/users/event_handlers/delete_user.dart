@@ -5,7 +5,7 @@ import 'package:firebase_tutorial/blocs/process.dart';
 import 'package:firebase_tutorial/blocs/users/users_events.dart';
 import 'package:firebase_tutorial/blocs/users/users_state.dart';
 import 'package:firebase_tutorial/models/user_model.dart';
-import 'package:firebase_tutorial/repositories/repository.dart';
+import 'package:firebase_tutorial/repositories/users_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,7 +13,7 @@ FutureOr<void> deleteUser(
   UsersDeleteEvent event,
   UsersState state,
   Emitter<UsersState> emit,
-  Repository<UserModel> repository,
+  UsersRepository repository,
 ) async {
   try {
     var deletionsMap = Map<String, Process>.from(state.deleteUserProcesses);

@@ -7,12 +7,11 @@ import 'package:firebase_tutorial/blocs/users/event_handlers/subscribe_to_user.d
 import 'package:firebase_tutorial/blocs/users/event_handlers/unsubscribe_to_user.dart';
 import 'package:firebase_tutorial/blocs/users/users_events.dart';
 import 'package:firebase_tutorial/blocs/users/users_state.dart';
-import 'package:firebase_tutorial/models/user_model.dart';
-import 'package:firebase_tutorial/repositories/repository.dart';
+import 'package:firebase_tutorial/repositories/users_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UsersBloc extends Bloc<UsersEvent, UsersState> {
-  final Repository<UserModel> repository;
+  final UsersRepository repository;
 
   UsersBloc(this.repository) : super(UsersState.initial()) {
     on<UsersLoadAllEvent>(

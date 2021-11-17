@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_tutorial/blocs/users/users_bloc.dart';
 import 'package:firebase_tutorial/models/user_model.dart';
-import 'package:firebase_tutorial/repositories/repository.dart';
 import 'package:firebase_tutorial/repositories/users_repository.dart';
 import 'package:firebase_tutorial/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final Repository<UserModel> usersRepository;
+  final UsersRepository usersRepository;
 
   const MyApp({
     Key? key,
