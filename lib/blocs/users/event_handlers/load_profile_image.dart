@@ -16,7 +16,8 @@ FutureOr<void> loadProfileImage(
   try {
     final refs = await repository.getReferencesInFolder(event.folderId);
 
-    // As a design choice, this folder should only have 1 file which is the profile image
+    // As a design choice, this folder should only
+    // have max 1 file which is the profile image
     final ref = refs.firstOrNull;
 
     if (ref != null) {
