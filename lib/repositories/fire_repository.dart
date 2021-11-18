@@ -130,6 +130,9 @@ class FileRepository {
       throw FileRepositoryException("An unknown error occurred");
     }
   }
+
+  Future<String> getDownloadUrlFromFullPath(String path) =>
+      _cloudStorage.ref(path).getDownloadURL();
 }
 
 class FileRepositoryException {

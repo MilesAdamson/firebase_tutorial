@@ -1,14 +1,12 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
-class CircularFileImage extends StatelessWidget {
-  final File? file;
+class CircularNetworkImage extends StatelessWidget {
+  final String? url;
   final double size;
 
-  const CircularFileImage({
+  const CircularNetworkImage({
     Key? key,
-    required this.file,
+    required this.url,
     this.size = 200,
   }) : super(key: key);
 
@@ -22,9 +20,9 @@ class CircularFileImage extends StatelessWidget {
           maxRadius: size / 2,
           child: Builder(
             builder: (context) {
-              if (file != null) {
-                return Image.file(
-                  file!,
+              if (url != null) {
+                return Image.network(
+                  url!,
                   fit: BoxFit.cover,
                   height: size,
                   width: size,

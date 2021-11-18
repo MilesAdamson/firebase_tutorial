@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:firebase_tutorial/blocs/process.dart';
 import 'package:firebase_tutorial/blocs/users/users_events.dart';
@@ -13,41 +12,20 @@ FutureOr<void> changeProfileImage(
   Emitter<UsersState> emit,
   FileRepository repository,
 ) async {
-  final existingImage = state.userProfileImages[event.id];
-  final files = Map<String, File>.from(state.userProfileImages);
-  files[event.id] = event.file;
-  emit(state.copyWith(userProfileImages: files));
-
   try {
-    var processes = Map<String, Process>.from(state.userProfileImageProcesses);
-    processes[event.id] = Process.loading();
-    emit(state.copyWith(userProfileImageProcesses: processes));
+    emit(state.copyWith(changeProfileImageProcess: Process.loading()));
 
-    await repository.upload(event.folderId, event.file);
-    processes = Map<String, Process>.from(state.userProfileImageProcesses);
-    processes[event.id] = Process.success();
+    final task = await repository.upload(event.folderId, event.file);
+    final url = await repository.getDownloadUrlFromFullPath(task.fullPath);
 
-    final files = Map<String, File>.from(state.userProfileImages);
-    files[event.id] = event.file;
+    final urls = Map<String, String>.from(state.userProfileImageDownloadURLs);
+    urls[event.id] = url;
+
     emit(state.copyWith(
-      userProfileImageProcesses: processes,
-      userProfileImages: files,
+      changeProfileImageProcess: Process.success(),
+      userProfileImageDownloadURLs: urls,
     ));
   } catch (e, s) {
-    final processes =
-        Map<String, Process>.from(state.userProfileImageProcesses);
-    processes[event.id] = Process.failed("$e\n$s");
-    final files = Map<String, File>.from(state.userProfileImages);
-
-    if (existingImage != null) {
-      files[event.id] = existingImage;
-    } else {
-      files.remove(event.id);
-    }
-
-    emit(state.copyWith(
-      userProfileImageProcesses: processes,
-      userProfileImages: files,
-    ));
+    emit(state.copyWith(createUserProcess: Process.failed("$e\n$s")));
   }
 }

@@ -78,8 +78,8 @@ class UserProfileScreenState extends State<UserProfileScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: CircularFileImage(
-                  file: state.userProfileImages[user.id],
+                child: CircularNetworkImage(
+                  url: state.userProfileImageDownloadURLs[user.id],
                 ),
               ),
               const Divider(height: 1),
