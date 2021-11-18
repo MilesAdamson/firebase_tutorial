@@ -9,7 +9,7 @@ class CircularFileImage extends StatelessWidget {
   const CircularFileImage({
     Key? key,
     required this.file,
-    this.size = 150,
+    this.size = 200,
   }) : super(key: key);
 
   @override
