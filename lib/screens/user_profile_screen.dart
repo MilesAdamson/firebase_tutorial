@@ -1,8 +1,8 @@
 import 'package:firebase_tutorial/blocs/users/users_bloc.dart';
 import 'package:firebase_tutorial/blocs/users/users_events.dart';
 import 'package:firebase_tutorial/blocs/users/users_state.dart';
+import 'package:firebase_tutorial/components/circular_network_image.dart';
 import 'package:firebase_tutorial/components/get_photo_dialog.dart';
-import 'package:firebase_tutorial/components/user_profile_image.dart';
 import 'package:firebase_tutorial/models/user_model.dart';
 import 'package:firebase_tutorial/util/languages.dart';
 import 'package:flutter/material.dart';
