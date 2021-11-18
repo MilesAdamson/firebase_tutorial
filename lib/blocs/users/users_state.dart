@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_tutorial/blocs/process.dart';
@@ -9,6 +10,8 @@ import 'package:flutter/material.dart';
 @immutable
 class UsersState {
   final Map<String, DocumentSnapshot<UserModel>> userDocuments;
+  final Map<String, File> userProfileImages;
+  final Map<String, Process> userProfileImageProcesses;
   final Process loadUsersProcess;
   final Process createUserProcess;
   final Process queryUsersProcess;
@@ -21,6 +24,8 @@ class UsersState {
 
   const UsersState._internal(
     this.userDocuments,
+    this.userProfileImages,
+    this.userProfileImageProcesses,
     this.loadUsersProcess,
     this.createUserProcess,
     this.queryUsersProcess,
@@ -31,6 +36,8 @@ class UsersState {
   factory UsersState.initial() {
     return UsersState._internal(
       const <String, DocumentSnapshot<UserModel>>{},
+      const <String, File>{},
+      const <String, Process>{},
       Process.initial(),
       Process.initial(),
       Process.initial(),
@@ -41,6 +48,8 @@ class UsersState {
 
   UsersState copyWith({
     Map<String, DocumentSnapshot<UserModel>>? userDocuments,
+    Map<String, File>? userProfileImages,
+    Map<String, Process>? userProfileImageProcesses,
     Process? loadUsersProcess,
     Process? createUserProcess,
     Process? queryUsersProcess,
@@ -50,6 +59,8 @@ class UsersState {
   }) {
     return UsersState._internal(
       userDocuments ?? this.userDocuments,
+      userProfileImages ?? this.userProfileImages,
+      userProfileImageProcesses ?? this.userProfileImageProcesses,
       loadUsersProcess ?? this.loadUsersProcess,
       createUserProcess ?? this.createUserProcess,
       queryUsersProcess ?? this.queryUsersProcess,
@@ -66,6 +77,8 @@ class UsersState {
         queryUsersProcess,
         deleteUserProcesses,
         userStreamSubscriptions,
+        userProfileImages,
+        userProfileImageProcesses,
       );
 
   @override
@@ -77,6 +90,9 @@ class UsersState {
             queryUsersProcess == other.queryUsersProcess &&
             mapEquals(deleteUserProcesses, other.deleteUserProcesses) &&
             mapEquals(userStreamSubscriptions, other.userStreamSubscriptions) &&
+            mapEquals(userProfileImages, other.userProfileImages) &&
+            mapEquals(
+                userProfileImageProcesses, other.userProfileImageProcesses) &&
             createUserProcess == other.createUserProcess);
   }
 }

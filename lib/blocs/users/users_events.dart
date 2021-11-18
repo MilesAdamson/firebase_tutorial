@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_tutorial/models/user_model.dart';
 import 'package:firebase_tutorial/queries/users_query.dart';
@@ -62,4 +64,14 @@ class UsersUnsubscribeEvent extends UsersEvent {
   final String id;
 
   UsersUnsubscribeEvent(this.id);
+}
+
+@immutable
+class UsersChangeProfileImageEvent extends UsersEvent {
+  final String id;
+  final File file;
+
+  UsersChangeProfileImageEvent(this.id, this.file);
+
+  String get folderId => "profile_images/$id";
 }

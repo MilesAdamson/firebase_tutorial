@@ -1,8 +1,9 @@
 import 'package:firebase_tutorial/blocs/users/users_bloc.dart';
 import 'package:firebase_tutorial/blocs/users/users_events.dart';
 import 'package:firebase_tutorial/blocs/users/users_state.dart';
+import 'package:firebase_tutorial/components/get_photo_dialog.dart';
+import 'package:firebase_tutorial/components/user_profile_image.dart';
 import 'package:firebase_tutorial/models/user_model.dart';
-import 'package:firebase_tutorial/repositories/fire_repository.dart';
 import 'package:firebase_tutorial/util/languages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,13 +58,16 @@ class UserProfileScreenState extends State<UserProfileScreen> {
             actions: [
               IconButton(
                 onPressed: () async {
-                  final fileRepository = FileRepository.of(context);
-                  final file =
-                      await fileRepository.takeNewPhoto("profile_image");
+                  final file = await showGetPhotoDialog(
+                    context,
+                    alertDialogContent: const Text(
+                        "Take a new profile picture, or choose from files"),
+                  );
+
                   if (file != null) {
-                    final upload = await fileRepository.upload(
-                        "profile_images/${user.id}", file);
-                    print(upload.fullPath);
+                    context
+                        .read<UsersBloc>()
+                        .add(UsersChangeProfileImageEvent(user.id, file));
                   }
                 },
                 icon: const Icon(Icons.camera_alt),
@@ -72,13 +76,10 @@ class UserProfileScreenState extends State<UserProfileScreen> {
           ),
           body: ListView(
             children: [
-              // TODO put a real image here with Firebase Cloud Storage
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: CircleAvatar(
-                  backgroundColor: Colors.blue,
-                  maxRadius: 75,
-                  child: Text("(profile image)"),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: CircularFileImage(
+                  file: state.userProfileImages[user.id],
                 ),
               ),
               const Divider(height: 1),

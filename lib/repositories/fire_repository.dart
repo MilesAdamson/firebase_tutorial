@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 
 class FileRepository {
   final FirebaseStorageProvider _storageProvider;
@@ -25,6 +26,9 @@ class FileRepository {
     try {
       final result = await FilePicker.platform.pickFiles(
         allowedExtensions: allowedExtensions,
+        type: [allowedExtensions ?? []].isNotEmpty
+            ? FileType.custom
+            : FileType.any,
       );
 
       final path = result?.files.single.path;
@@ -51,11 +55,11 @@ class FileRepository {
   Future<File?> pickPhoto() =>
       pickFile(allowedExtensions: FileExtensions.acceptedImageFormats);
 
-  Future<File?> takeNewPhoto(
-    String filename, {
+  Future<File?> takeNewPhoto({
+    String? filename,
     int imageQuality = 100,
   }) async {
-    assert(!filename.contains("."),
+    assert(filename == null || !filename.contains("."),
         "Do not include the extension in the desired filename");
 
     try {
@@ -63,6 +67,8 @@ class FileRepository {
           source: ImageSource.camera, imageQuality: imageQuality);
 
       if (result == null) return null;
+
+      filename ??= const Uuid().v4();
 
       final ext = result.path.split(".").last;
       final directory = await getApplicationDocumentsDirectory();
