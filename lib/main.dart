@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_tutorial/blocs/users/users_bloc.dart';
-import 'package:firebase_tutorial/models/user_model.dart';
+import 'package:firebase_tutorial/repositories/fire_repository.dart';
 import 'package:firebase_tutorial/repositories/users_repository.dart';
 import 'package:firebase_tutorial/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,17 +29,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiRepositoryProvider(
       providers: [
-        // We will add more blocs here for sure
-        BlocProvider(create: (context) => UsersBloc(usersRepository)),
-      ],
-      child: MaterialApp(
-        title: 'Flutter Firebase',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+        RepositoryProvider(
+          create: (context) => FileRepository(
+            ImagePicker(),
+            () => FirebaseStorage.instance,
+          ),
         ),
-        home: const SplashScreen(),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          // We will add more blocs here for sure
+          BlocProvider(create: (context) => UsersBloc(usersRepository)),
+        ],
+        child: MaterialApp(
+          title: 'Flutter Firebase',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: const SplashScreen(),
+        ),
       ),
     );
   }

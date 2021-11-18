@@ -2,6 +2,7 @@ import 'package:firebase_tutorial/blocs/users/users_bloc.dart';
 import 'package:firebase_tutorial/blocs/users/users_events.dart';
 import 'package:firebase_tutorial/blocs/users/users_state.dart';
 import 'package:firebase_tutorial/models/user_model.dart';
+import 'package:firebase_tutorial/repositories/fire_repository.dart';
 import 'package:firebase_tutorial/util/languages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,6 +54,21 @@ class UserProfileScreenState extends State<UserProfileScreen> {
         return Scaffold(
           appBar: AppBar(
             title: Text(user.name),
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  final fileRepository = FileRepository.of(context);
+                  final file =
+                      await fileRepository.takeNewPhoto("profile_image");
+                  if (file != null) {
+                    final upload = await fileRepository.upload(
+                        "profile_images/${user.id}", file);
+                    print(upload.fullPath);
+                  }
+                },
+                icon: const Icon(Icons.camera_alt),
+              )
+            ],
           ),
           body: ListView(
             children: [
