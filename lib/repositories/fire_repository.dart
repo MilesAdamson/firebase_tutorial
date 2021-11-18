@@ -93,6 +93,15 @@ class FileRepository {
     }
   }
 
+  Future<void> delete(String fullPath) async {
+    try {
+      await _cloudStorage.ref(fullPath).delete();
+    } catch (e, s) {
+      debugPrint("$e\n$s");
+      throw FileRepositoryException("An unknown error occurred");
+    }
+  }
+
   Future<File> download(String folderId, String filePath) async {
     assert(filePath.split(".").length == 2,
         "Include the extension in the filepath");

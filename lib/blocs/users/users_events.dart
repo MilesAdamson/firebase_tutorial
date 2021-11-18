@@ -75,3 +75,12 @@ class UsersChangeProfileImageEvent extends UsersEvent {
 
   String get folderId => "profile_images/$id";
 }
+
+@immutable
+class UsersLoadProfileImageEvent extends UsersEvent {
+  final String id;
+
+  UsersLoadProfileImageEvent(this.id);
+
+  String get folderId => "profile_images/$id";
+}

@@ -28,6 +28,7 @@ class UserProfileScreenState extends State<UserProfileScreen> {
   initState() {
     debugPrint(widget.id);
     usersBloc.add(UsersSubscribeEvent(widget.id));
+    usersBloc.add(UsersLoadProfileImageEvent(widget.id));
     super.initState();
   }
 
@@ -79,7 +80,7 @@ class UserProfileScreenState extends State<UserProfileScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: CircularNetworkImage(
-                  url: state.userProfileImageDownloadURLs[user.id],
+                  url: state.profileImageURLs[user.id],
                 ),
               ),
               const Divider(height: 1),

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 @immutable
 class UsersState {
   final Map<String, DocumentSnapshot<UserModel>> userDocuments;
-  final Map<String, String> userProfileImageDownloadURLs;
+  final Map<String, String> profileImageURLs;
   final Process loadUsersProcess;
   final Process createUserProcess;
   final Process queryUsersProcess;
@@ -23,7 +23,7 @@ class UsersState {
 
   const UsersState._internal(
     this.userDocuments,
-    this.userProfileImageDownloadURLs,
+    this.profileImageURLs,
     this.loadUsersProcess,
     this.createUserProcess,
     this.queryUsersProcess,
@@ -47,7 +47,7 @@ class UsersState {
 
   UsersState copyWith({
     Map<String, DocumentSnapshot<UserModel>>? userDocuments,
-    Map<String, String>? userProfileImageDownloadURLs,
+    Map<String, String>? profileImageURLs,
     Process? loadUsersProcess,
     Process? createUserProcess,
     Process? queryUsersProcess,
@@ -58,7 +58,7 @@ class UsersState {
   }) {
     return UsersState._internal(
       userDocuments ?? this.userDocuments,
-      userProfileImageDownloadURLs ?? this.userProfileImageDownloadURLs,
+      profileImageURLs ?? this.profileImageURLs,
       loadUsersProcess ?? this.loadUsersProcess,
       createUserProcess ?? this.createUserProcess,
       queryUsersProcess ?? this.queryUsersProcess,
@@ -76,7 +76,7 @@ class UsersState {
         queryUsersProcess,
         deleteUserProcesses,
         userStreamSubscriptions,
-        userProfileImageDownloadURLs,
+        profileImageURLs,
         changeProfileImageProcess,
       );
 
@@ -90,8 +90,7 @@ class UsersState {
             changeProfileImageProcess == other.changeProfileImageProcess &&
             mapEquals(deleteUserProcesses, other.deleteUserProcesses) &&
             mapEquals(userStreamSubscriptions, other.userStreamSubscriptions) &&
-            mapEquals(userProfileImageDownloadURLs,
-                other.userProfileImageDownloadURLs) &&
+            mapEquals(profileImageURLs, other.profileImageURLs) &&
             createUserProcess == other.createUserProcess);
   }
 }
