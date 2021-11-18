@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:collection/collection.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_tutorial/repositories/firebase_providers.dart';
@@ -102,38 +101,10 @@ class FileRepository {
     }
   }
 
-  Future<File> download(String folderId, String filePath) async {
-    assert(filePath.split(".").length == 2,
-        "Include the extension in the filepath");
-
-    try {
-      final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/$filePath');
-      await _cloudStorage.ref(folderId).child(filePath).writeToFile(file);
-      return file;
-    } catch (e, s) {
-      debugPrint("$e\n$s");
-      throw FileRepositoryException("An unknown error occurred");
-    }
-  }
-
   Future<List<Reference>> getReferencesInFolder(String folderId) async {
     try {
       final listResult = await _cloudStorage.ref(folderId).listAll();
       return listResult.items;
-    } catch (e, s) {
-      debugPrint("$e\n$s");
-      throw FileRepositoryException("An unknown error occurred");
-    }
-  }
-
-  Future<Reference?> searchFolder(String folderId, String filePath) async {
-    assert(filePath.split(".").length == 2,
-        "Include the extension in the filepath");
-
-    try {
-      final refs = await getReferencesInFolder(folderId);
-      return refs.firstWhereOrNull((ref) => ref.fullPath.contains(filePath));
     } catch (e, s) {
       debugPrint("$e\n$s");
       throw FileRepositoryException("An unknown error occurred");
