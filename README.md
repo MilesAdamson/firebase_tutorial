@@ -31,3 +31,15 @@
 ### 4. Unsubscribe and close subscriptions
 
 ### 5. Dispatching events in the new UI
+
+# Photos and Files
+
+### 1. Dependencies
+```
+  path_provider: ^2.0.7
+  file_picker: ^4.2.3
+  image_picker: ^0.8.4+4
+```
+### 2. Image Picker
+
+### 3. File Picker

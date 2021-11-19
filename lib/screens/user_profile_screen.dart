@@ -57,6 +57,8 @@ class UserProfileScreenState extends State<UserProfileScreen> {
           appBar: AppBar(
             title: Text(user.name),
             actions: [
+              // TODO obviously you should only be able to change your
+              // own profile image, but this tutorial has no authentication yet
               IconButton(
                 onPressed: () async {
                   final file = await showGetPhotoDialog(

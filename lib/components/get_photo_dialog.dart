@@ -14,6 +14,7 @@ Future<File?> showGetPhotoDialog(
     builder: (context) {
       return GetPhotoDialog(
         newPhotoFilename: newPhotoFilename,
+        alertDialogContent: alertDialogContent,
       );
     },
   );
