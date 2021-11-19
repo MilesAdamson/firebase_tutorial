@@ -40,8 +40,9 @@
   file_picker: ^4.2.3
   image_picker: ^0.8.4+4
 ```
-### 2. Image Picker
 
-### 3. File Picker
+### 2. File Picker
+
+### 3. Image Picker
 
 ### 4. Prompt User in Dialog
