@@ -11,6 +11,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class FileRepository {
+  static const acceptedImageFormats = [
+    "png",
+    "jpg",
+    "jpeg",
+  ];
+
   final FirebaseStorageProvider _storageProvider;
   final ImagePicker _imagePicker;
 
@@ -24,7 +30,9 @@ class FileRepository {
   Future<File?> pickFile({List<String>? allowedExtensions}) async {
     try {
       final result = await FilePicker.platform.pickFiles(
+        // Some devices do not respect the allowedExtensions
         allowedExtensions: allowedExtensions,
+        // You must put FileType.custom for type if you provide allowedExtensions
         type: [allowedExtensions ?? []].isNotEmpty
             ? FileType.custom
             : FileType.any,
@@ -36,8 +44,7 @@ class FileRepository {
 
       final file = File(path);
 
-      // Some operating systems do not respect the allowedExtensions
-      // and let the user pick anything, so we need to double check
+      // Double check extension to ensure it was the correct type of file
       if (allowedExtensions != null &&
           !allowedExtensions.contains(file.extension)) {
         throw FileRepositoryException(
@@ -52,7 +59,7 @@ class FileRepository {
   }
 
   Future<File?> pickPhoto() =>
-      pickFile(allowedExtensions: FileExtensions.acceptedImageFormats);
+      pickFile(allowedExtensions: acceptedImageFormats);
 
   Future<File?> takeNewPhoto({
     String? filename,
