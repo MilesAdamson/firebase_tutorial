@@ -99,6 +99,7 @@ class FileRepository {
     }
   }
 
+  /// Delete throws an exception if there is nothing at the path
   Future<void> delete(String fullPath) async {
     try {
       await _cloudStorage.ref(fullPath).delete();
@@ -108,6 +109,7 @@ class FileRepository {
     }
   }
 
+  /// A reference could be a file or a folder
   Future<List<Reference>> getReferencesInFolder(String folderId) async {
     try {
       final listResult = await _cloudStorage.ref(folderId).listAll();
@@ -118,6 +120,9 @@ class FileRepository {
     }
   }
 
+  /// Download urls are long-lived and you could save it somewhere for
+  /// future use if you want. The download url to a profile image could
+  /// be stored on the user profile in firestore for example.
   Future<String> getDownloadUrlFromFullPath(String path) =>
       _cloudStorage.ref(path).getDownloadURL();
 }
