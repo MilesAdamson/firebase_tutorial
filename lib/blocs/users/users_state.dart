@@ -14,6 +14,7 @@ class UsersState {
   final Process createUserProcess;
   final Process queryUsersProcess;
   final Process changeProfileImageProcess;
+  final Process loadUsersPageProcess;
   final Map<String, Process> deleteUserProcesses;
   final Map<String, StreamSubscription<DocumentSnapshot<UserModel>>>
       userStreamSubscriptions;
@@ -30,6 +31,7 @@ class UsersState {
     this.changeProfileImageProcess,
     this.deleteUserProcesses,
     this.userStreamSubscriptions,
+    this.loadUsersPageProcess,
   );
 
   factory UsersState.initial() {
@@ -42,6 +44,7 @@ class UsersState {
       Process.initial(),
       const <String, Process>{},
       const <String, StreamSubscription<DocumentSnapshot<UserModel>>>{},
+      Process.initial(),
     );
   }
 
@@ -52,6 +55,7 @@ class UsersState {
     Process? createUserProcess,
     Process? queryUsersProcess,
     Process? changeProfileImageProcess,
+    Process? loadUsersPageProcess,
     Map<String, Process>? deleteUserProcesses,
     Map<String, StreamSubscription<DocumentSnapshot<UserModel>>>?
         userStreamSubscriptions,
@@ -65,6 +69,7 @@ class UsersState {
       changeProfileImageProcess ?? this.changeProfileImageProcess,
       deleteUserProcesses ?? this.deleteUserProcesses,
       userStreamSubscriptions ?? this.userStreamSubscriptions,
+      loadUsersPageProcess ?? this.loadUsersPageProcess,
     );
   }
 
@@ -78,6 +83,7 @@ class UsersState {
         userStreamSubscriptions,
         profileImageURLs,
         changeProfileImageProcess,
+        loadUsersPageProcess,
       );
 
   @override
@@ -91,6 +97,7 @@ class UsersState {
             mapEquals(deleteUserProcesses, other.deleteUserProcesses) &&
             mapEquals(userStreamSubscriptions, other.userStreamSubscriptions) &&
             mapEquals(profileImageURLs, other.profileImageURLs) &&
-            createUserProcess == other.createUserProcess);
+            createUserProcess == other.createUserProcess &&
+            loadUsersPageProcess == other.loadUsersPageProcess);
   }
 }

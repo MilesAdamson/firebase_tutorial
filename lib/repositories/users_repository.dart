@@ -4,6 +4,8 @@ import 'package:firebase_tutorial/queries/users_query.dart';
 import 'package:firebase_tutorial/repositories/firebase_providers.dart';
 
 class UsersRepository {
+  static const paginationSize = 20;
+
   final FirebaseFirestoreProvider _firestoreProvider;
 
   UsersRepository(this._firestoreProvider);
@@ -31,8 +33,22 @@ class UsersRepository {
     return querySnapshot.docs;
   }
 
-  // This creates a new document, or overwrites one if it exists
+  Future<List<DocumentSnapshot<UserModel>>> getPageOfUsersAlphabetically(
+      String startAt) async {
+    final querySnapshot = await _collection
+        // We must order by something in order to use startAt.
+        // Or, you could instead use startAtDocument instead.
+        .orderBy(UserModel.keyName)
+        // startAt expects a list of values to start at, the same length as
+        // the number of fields we are ordering by (and in the same order).
+        .startAt([startAt])
+        .limit(paginationSize)
+        .get();
 
+    return querySnapshot.docs;
+  }
+
+  // This creates a new document, or overwrites one if it exists
   Future<DocumentSnapshot<UserModel>> upsert(UserModel userModel) async {
     await _collection.doc(userModel.id).set(userModel);
     return get(userModel.id);

@@ -3,6 +3,7 @@ import 'package:firebase_tutorial/blocs/users/event_handlers/create_user.dart';
 import 'package:firebase_tutorial/blocs/users/event_handlers/delete_user.dart';
 import 'package:firebase_tutorial/blocs/users/event_handlers/load_all_users.dart';
 import 'package:firebase_tutorial/blocs/users/event_handlers/load_profile_image.dart';
+import 'package:firebase_tutorial/blocs/users/event_handlers/load_users_page.dart';
 import 'package:firebase_tutorial/blocs/users/event_handlers/on_user_updated.dart';
 import 'package:firebase_tutorial/blocs/users/event_handlers/query_users.dart';
 import 'package:firebase_tutorial/blocs/users/event_handlers/subscribe_to_user.dart';
@@ -55,6 +56,10 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
 
     on<UsersLoadProfileImageEvent>(
       (event, emit) => loadProfileImage(event, state, emit, _fileRepository),
+    );
+
+    on<UsersLoadPageEvent>(
+      (event, emit) => loadUsersPage(event, state, emit, _userRepository),
     );
   }
 }

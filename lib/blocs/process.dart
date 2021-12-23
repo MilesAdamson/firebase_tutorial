@@ -2,16 +2,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-class Process {
+class Process<T> {
   final bool isLoading;
   final String? errorMessage;
   final bool succeeded;
+  final T? result;
 
   const Process(
     this.isLoading,
     this.errorMessage,
-    this.succeeded,
-  );
+    this.succeeded, {
+    this.result,
+  });
 
   factory Process.loading() {
     return const Process(
@@ -29,11 +31,12 @@ class Process {
     );
   }
 
-  factory Process.success() {
-    return const Process(
+  factory Process.success({T? result}) {
+    return Process<T>(
       false,
       null,
       true,
+      result: result,
     );
   }
 

@@ -13,6 +13,13 @@ abstract class UsersEvent {}
 class UsersLoadAllEvent extends UsersEvent {}
 
 @immutable
+class UsersLoadPageEvent extends UsersEvent {
+  final String startAt;
+
+  UsersLoadPageEvent(this.startAt);
+}
+
+@immutable
 class UsersDeleteEvent extends UsersEvent {
   final String id;
 
